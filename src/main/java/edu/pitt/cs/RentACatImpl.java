@@ -1,5 +1,7 @@
 package edu.pitt.cs;
 
+import static org.mockito.Mockito.clearInvocations;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -18,7 +20,31 @@ public class RentACatImpl implements RentACat {
 	 */
 
 	public boolean returnCat(int id) {
-		// TODO: Fill in
+		
+		if(cats == null)
+		{
+			System.out.println("Invalid cat ID.");
+			return false;
+		}
+		for(Cat c : cats)
+		{
+			if(c.getId() == id)
+			{
+				if(!c.getRented())
+				{
+					System.out.println(c.getName()+ " is already here!");
+					return false;
+				}
+				else
+				{
+					c.returnCat();
+					System.out.println("Welcome back, " + c.getName() + "!");
+					return true;
+				}
+				
+			}
+		}
+		System.out.println("Invalid cat ID.");
 		return false;
 	}
 
@@ -33,8 +59,31 @@ public class RentACatImpl implements RentACat {
 	 */
 
 	public boolean rentCat(int id) {
-		// TODO: Fill in
+		if(cats == null)
+		{
+			System.out.println("Invalid cat ID.");
+			return false;
+		}
+		for(Cat c : cats)
+		{
+			if(c.getId() == id)
+			{
+				if(c.getRented())
+				{
+					System.out.println("Sorry, " +c.getName()+ " is not here!");
+					return false;
+				}
+				else
+				{
+					c.rentCat();
+					System.out.println(c.getName() + " has been rented.");
+					return true;
+				}
+			}
+		}
+		System.out.println("Invalid cat ID.");
 		return false;
+	
 	}
 
 	/**
@@ -47,7 +96,20 @@ public class RentACatImpl implements RentACat {
 	 */
 
 	public boolean renameCat(int id, String name) {
-		// TODO: Fill in
+		if(cats == null)
+		{
+			System.out.println("Invalid cat ID.");
+			return false;
+		}
+		for(Cat c : cats)
+		{
+			if(c.getId() == id)
+			{
+				c.renameCat(name);
+				return true;
+			}
+		}
+		System.out.println("Invalid cat ID.");
 		return false;
 	}
 
@@ -62,8 +124,15 @@ public class RentACatImpl implements RentACat {
 	 */
 
 	public String listCats() {
-		// TODO: Fill in
-		return "WRITE CODE FOR THIS";
+		String ret = "";
+		for(Cat c : cats)
+		{
+			if(c.getRented() == false)
+			{
+				ret += c.toString() + "\n";
+			}
+		}
+		return ret;
 	}
 
 	/**
