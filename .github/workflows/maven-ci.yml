@@ -71,6 +71,7 @@ jobs:
       uses: advanced-security/maven-dependency-submission-action@v3
 
   build:
+    needs: [maven_test]  # Enforces that maven_test runs first
     name: Build and analyze
     runs-on: ubuntu-latest
     steps:
